@@ -44,7 +44,6 @@ export default {
           case "store":
           case "update":
           case "destroy":
-          case "resendemail":
             this.snackbar_color = "primary";
             this.snackbar_success = true;
             this.page_message = data.message;
@@ -60,7 +59,7 @@ export default {
         } = error;
         switch (status) {
           case 401:
-            if (data.page != "login") {
+            if (data.page !== "login") {
               this.$store.dispatch("auth/logout");
               this.$store.dispatch("global/reinit");
               this.snackbar_color = "error";
@@ -114,11 +113,11 @@ export default {
             this.snackbar_color = "error";
             this.snackbar_error = true;
             var error_messages = [];
-            for (var p in data) {
-              var messages = [];
-              var error_list = data[p];
+            for (let p in data) {
+              let messages = [];
+              let error_list = data[p];
               if (Array.isArray(error_list)) {
-                for (var i = 0; i < error_list.length; i++) {
+                for (let i = 0; i < error_list.length; i++) {
                   messages.push({
                     message: error_list[i],
                   });
@@ -139,13 +138,13 @@ export default {
               }
             }
             this.page_form_error_message = error_messages;
-            this.page_message = "(" + status + ": Unprocessible Entity) ";
+            this.page_message = "(" + status + ": Unprocessable Entity) ";
             break;
           case 500:
             this.snackbar_error = true;
             this.snackbar_color = "error";
             this.page_message =
-              "(" + status + " (internal server eror): " + data.message;
+              "(" + status + " (internal server error): " + data.message;
             break;
         }
         this.setLoading(false);
@@ -156,7 +155,6 @@ export default {
 
   data() {
     return {
-      // axiosCallloading
       refCount: 0,
       isLoading: false,
       snackbar_success: false,
